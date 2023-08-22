@@ -27,17 +27,19 @@ def test_dark_theme_by_time_and_user_choice():
     dark_theme_enabled_by_user = True
     current_time = time(hour=16)
 
-    if dark_theme_enabled_by_user:
-        is_dark_theme = True
-
-    elif not dark_theme_enabled_by_user:
-        is_dark_theme = False
-
-    elif dark_theme_enabled_by_user is None:
+    if dark_theme_enabled_by_user is None:
         if 6 < current_time.hour < 22:
             is_dark_theme = False
         else:
             is_dark_theme = True
+
+    elif dark_theme_enabled_by_user:
+        is_dark_theme = True
+
+    else:
+        is_dark_theme = False
+
+
     assert is_dark_theme is True
 
 
@@ -90,22 +92,27 @@ def test_readable_function():
     find_registration_button_on_login_page(page_url="https://companyname.com/login", button_text="Register")
 
 
+def uni_func(func, *args):
+    name = func.__name__.replace('_', ' ').title()
+    arg_str = ", ".join(args)
+    result = "{name} [{arg_str}]"
+    print(result)
+    return result
+
+
 def open_browser(browser_name):
-    actual_result = open_browser.__name__.title().replace('_', ' ')
-    actual_result = f'{actual_result} [{browser_name}]'
-    print(actual_result)
+    actual_result = uni_func(open_browser, browser_name)
+
     assert actual_result == "Open Browser [Chrome]"
 
 
 def go_to_companyname_homepage(page_url):
-    actual_result = go_to_companyname_homepage.__name__.title().replace('_', ' ')
-    actual_result = f'{actual_result} [{page_url}]'
-    print(actual_result)
+    actual_result = uni_func(go_to_companyname_homepage, page_url)
+
     assert actual_result == "Go To Companyname Homepage [https://companyname.com]"
 
 
 def find_registration_button_on_login_page(page_url, button_text):
-    actual_result = find_registration_button_on_login_page.__name__.title().replace('_', ' ')
-    actual_result = f'{actual_result} [{page_url}, {button_text}]'
-    print(actual_result)
+    actual_result = uni_func(find_registration_button_on_login_page, page_url, button_text)
+
     assert actual_result == "Find Registration Button On Login Page [https://companyname.com/login, Register]"
