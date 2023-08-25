@@ -95,7 +95,7 @@ def test_readable_function():
 def uni_func(func, *args):
     name = func.__name__.replace('_', ' ').title()
     arg_str = ", ".join(args)
-    result = "{name} [{arg_str}]"
+    result = f"{name}[{arg_str}]"
     print(result)
     return result
 
